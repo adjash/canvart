@@ -1,8 +1,9 @@
 const canvas = document.querySelector('canvas.drawing__board');
 const canvasCtx = canvas.getContext('2d');
-
+canvasCtx.save();
 let defaultColor = '#000000';
 let defaultWidth = 10;
+let serverData;
 window.addEventListener('load', () => {
 
 
@@ -15,11 +16,14 @@ window.addEventListener('load', () => {
         activeDraw = true;
     }
     const endPosition = () => {
+        serverData = canvasCtx;
         canvasCtx.closePath();
         activeDraw = false;
     }
 
     function draw(e) {
+        e.preventDefault();
+        e.stopPropagation();
         if (!activeDraw) return;
 
         canvasCtx.lineWidth = defaultWidth;
@@ -50,6 +54,8 @@ window.addEventListener('load', () => {
 
 /* Dynamic sizing */
 window.addEventListener('resize', (e) => {
+    console.log(canvasCtx.restore())
+    canvasCtx.restore();
     elementResize(canvas);
 });
 

@@ -20,4 +20,21 @@
         </div>
     </div>
 </div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    
+        var socket = io();
+    
+    window.addEventListener('load', () => {
+        socket.on("hello", (arg) => {
+            console.log(arg);
+        });
+        setInterval(function(){
+            socket.emit("getLines", canvas.toDataURL());
+            console.log(canvasCtx);
+        }, 2500);
+        //setInterval(socket.on("sendlines", canvasCtx), 200);
+    });
+</script>
       

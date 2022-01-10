@@ -35,10 +35,10 @@
             console.log(arg);
         });*/
         
-        setInterval(function (e){
+        /*setInterval(function (e){
             //sending canvas as image to the server
             socket.emit("sendLinesToServer", canvas.toDataURL());
-        }, 7);
+        }, 7);*/
         
         socket.on("getLinesFromServer", (canvasData) => {
             context = canvas.getContext("2d");

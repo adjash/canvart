@@ -82,12 +82,7 @@
             e.preventDefault();
             //send message to user chat
             socket.emit("userMessage", e.path[0].value);
-
-            let chatItem = document.createElement('li');
-            chatItem.className = "message";
-            chatItem.innerHTML = `<p>${e.path[0].value}</p>`;
-
-            userChat.appendChild(chatItem);
+            
             e.path[0].value = "";
         }
     });

@@ -24,7 +24,6 @@ io.on("connection", function(socket) {
 
 
     socket.on("userMessage", (message) => {
-        console.log(message)
         io.emit("receiveUserMessage", message);
     });
 

@@ -58,7 +58,8 @@
         //receive lines from the server
         socket.on("getLinesFromServer", (canvasData) => {
             context = canvas.getContext("2d");
-            imgCont.src = canvasData;
+            //imgCont.src = canvasData;
+            imgCont.src = "";
             setInterval(context.drawImage(imgCont, 0, 0), 200);
         });
 

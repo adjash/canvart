@@ -51,6 +51,8 @@
         let imgCont = document.createElement("img");
         canvas.appendChild(imgCont);
 
+        let context = canvas.getContext("2d");
+
         /*socket.on("hello", (arg) => {
             console.log(arg);
         });*/
@@ -62,19 +64,21 @@
             socket.emit("sendLinesToServer", canvas.toDataURL());
         }, 500);
         
+        canvas.addEventListener('mousedown', function(e){
+            socket.emit("sendLinesToServer", canvas.toDataURL());
+        });
 
         //receive lines from the server
         socket.on("getLinesFromServer", (canvasData) => {
-            context = canvas.getContext("2d");
             imgCont.src = canvasData;
             //imgCont.src = "";
-            setInterval(context.drawImage(imgCont, 0, 0), 250);
+            context.drawImage(imgCont, 0, 0)
+            //setInterval(context.drawImage(imgCont, 0, 0), 250);
         });
 
         socket.on("serverCanvasClear", (e) => {
-            context = canvas.getContext("2d");
             imgCont.src = "";
-            setTimeout(context.drawImage(imgCont, 0, 0), 50);
+            context.drawImage("", 0, 0);
         });
 
         //receive user message from the server

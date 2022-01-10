@@ -78,7 +78,7 @@ window.addEventListener('resize', (e) => {
 function elementResize(element) {
     console.log(element.parentNode.offsetWidth);
     element.width = element.parentNode.offsetWidth;
-    element.height = (window.innerHeight / 100 * 75);
+    element.height = (window.innerHeight / 100 * 65);
 }
 
 
@@ -90,9 +90,3 @@ const isChrome = () => {
         return false;
     }
 }
-
-/* 
-function sendLines() {
-
-    socket.emit("sendLinesToServer", canvas.toDataURL());
-} */

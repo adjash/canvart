@@ -30,7 +30,7 @@ io.on("connection", function(socket) {
 
 
     socket.on("clearFrame", (e) => {
-        io.emit("serverCanvasClear", "");
+        io.emit("serverCanvasClear", "test");
     })
 
     socket.on("connect_error", (err) => {

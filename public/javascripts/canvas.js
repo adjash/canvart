@@ -76,7 +76,8 @@ window.addEventListener('resize', (e) => {
 });
 
 function elementResize(element) {
-    element.width = (window.innerWidth / 100 * 90);
+    console.log(element.parentNode.offsetWidth);
+    element.width = element.parentNode.offsetWidth;
     element.height = (window.innerHeight / 100 * 75);
 }
 

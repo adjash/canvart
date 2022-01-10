@@ -1,0 +1,7 @@
+.v_col {
+    display: flex;
+    flex-direction: column;
+}
+.sbetween {
+    justify-content: space-between;
+}

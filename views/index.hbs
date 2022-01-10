@@ -1,33 +1,38 @@
 {{!-- <h1>{{title}}</h1>
 <p>Welcome to {{title}}</p> --}}
-
-<canvas class="drawing__board"></canvas>
-<div class="controls">
-    <div class="brush__controls">
-        <div class="brush__color" data-active="0">
-            <input type="color" id="brush__color" name="brush color"
-           value="#000000">
-           <input type="text" name="unsupported color" id="unsupported__color">
-           <label for="brush color">color</label>
-        </div>
-        <div class="brush__width">
-            <input type="range" min="1" max="100" value="10" name="brush width" id="brush__width">
-            <label for="brush width">Stroke width</label>
-        </div>
+<div class="content__width">
+    <div class="three__quart">
+        <canvas class="drawing__board"></canvas>
     </div>
-    <div class="board__controls">
-        <div class="board__clear">
-            <button class="clear__btn">Clear</button>
+    <div class="quart v_col sbetween">
+        <div class="controls">
+            <div class="brush__controls">
+                <div class="brush__color" data-active="0">
+                    <input type="color" id="brush__color" name="brush color"
+                value="#000000">
+                <input type="text" name="unsupported color" id="unsupported__color">
+                <label for="brush color">color</label>
+                </div>
+                <div class="brush__width">
+                    <input type="range" min="1" max="100" value="10" name="brush width" id="brush__width">
+                    <label for="brush width">Stroke width</label>
+                </div>
+            </div>
+            <div class="board__controls">
+                <div class="board__clear">
+                    <button class="clear__btn">Clear</button>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-<div class="chat">
-    <div class="user__chat">
-        <ul class="messages">
-            <li class="message">Messages from other players:</li>
+        <div class="chat">
+            <div class="user__chat">
+                <ul class="messages">
+                    <li class="message">Messages from other players:</li>
 
-        </ul>
-        <input type="text" name="message input" id="message__input">
+                </ul>
+                <input type="text" name="message input" id="message__input" placeholder="Type a message here....">
+            </div>
+        </div>
     </div>
 </div>
 
@@ -37,8 +42,9 @@
     let socket = io();
 
     let userChat = document.querySelector('.chat .user__chat .messages');
-    
+
     window.addEventListener('load', () => {
+
         let imgCont = document.createElement("img");
         canvas.appendChild(imgCont);
 
@@ -51,7 +57,7 @@
         setInterval(function (e){
             //sending canvas as image to the server
             socket.emit("sendLinesToServer", canvas.toDataURL());
-        }, 700);
+        }, 500);
         
 
         //receive lines from the server
@@ -69,10 +75,10 @@
         });
 
         //receive user message from the server
-        socket.on("receiveUserMessage", (message) => {
+        socket.on("receiveUserMessage", (messageObject) => {
             let chatItem = document.createElement('li');
             chatItem.className = "message";
-            chatItem.innerHTML = `<p>${message}</p>`;
+            chatItem.innerHTML = `<p>${messageObject.sender.slice(0, 5)}:${messageObject.message}</p>`;
 
             userChat.appendChild(chatItem);
         });
@@ -81,8 +87,8 @@
         if(e.keyCode === 13){
             e.preventDefault();
             //send message to user chat
-            socket.emit("userMessage", e.path[0].value);
-            
+
+            socket.emit("userMessage", {id: socket.id, message: e.path[0].value});
             e.path[0].value = "";
         }
     });

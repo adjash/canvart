@@ -23,8 +23,9 @@ io.on("connection", function(socket) {
     });
 
 
-    socket.on("userMessage", (message) => {
-        io.emit("receiveUserMessage", message);
+    socket.on("userMessage", (messageObject) => {
+        console.log(messageObject.id);
+        io.emit("receiveUserMessage", { sender: messageObject.id, message: messageObject.message });
     });
 
 

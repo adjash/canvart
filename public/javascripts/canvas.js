@@ -4,8 +4,13 @@ canvasCtx.save();
 let defaultColor = '#000000';
 let defaultWidth = 10;
 let serverData;
-window.addEventListener('load', () => {
 
+window.addEventListener('load', () => {
+    if (!isChrome()) {
+        document.querySelector('input[name="brush color"]').remove();
+    } else {
+        document.querySelector('input[name="unsupported color"]').remove();
+    }
 
     elementResize(canvas);
 
@@ -18,6 +23,8 @@ window.addEventListener('load', () => {
     const endPosition = () => {
         serverData = canvasCtx;
         canvasCtx.closePath();
+        console.log('end');
+
         activeDraw = false;
     }
 
@@ -39,11 +46,20 @@ window.addEventListener('load', () => {
     canvas.addEventListener('mouseup', endPosition);
     canvas.addEventListener('mousemove', draw);
 
-    document.querySelector('#brush__color').addEventListener('change', function(e) {
-        console.log(e)
-        defaultColor = e.path[0].value;
-    });
+
+    if (isChrome()) {
+        document.querySelector('#brush__color').addEventListener('change', function(e) {
+            console.log(e)
+            defaultColor = e.path[0].value;
+        });
+    } else {
+        document.querySelector('#unsupported__color').addEventListener('change', function(e) {
+            console.log(e);
+            defaultColor = e.target.value;
+        });
+    }
     document.querySelector('#brush__width').addEventListener('change', function(e) {
+        console.log(e)
         defaultWidth = e.path[0].value;
     });
     document.querySelector('.clear__btn').addEventListener('click', function(e) {
@@ -62,4 +78,20 @@ window.addEventListener('resize', (e) => {
 function elementResize(element) {
     element.width = (window.innerWidth / 100 * 90);
     element.height = (window.innerHeight / 100 * 75);
+}
+
+
+
+const isChrome = () => {
+    if (navigator.userAgent.indexOf("Chrome") != -1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+function sendLines() {
+
+    socket.emit("sendLinesToServer", canvas.toDataURL());
 }

@@ -7,6 +7,7 @@
         <div class="brush__color" data-active="0">
             <input type="color" id="brush__color" name="brush color"
            value="#000000">
+           <input type="text" name="unsupported color" id="unsupported__color">
            <label for="brush color">color</label>
         </div>
         <div class="brush__width">
@@ -24,16 +25,26 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
     
-        var socket = io();
+    var socket = io();
     
     window.addEventListener('load', () => {
-        socket.on("hello", (arg) => {
+        let imgCont = document.createElement("img");
+        canvas.appendChild(imgCont);
+
+        /*socket.on("hello", (arg) => {
             console.log(arg);
+        });*/
+        
+        setInterval(function (e){
+            //sending canvas as image to the server
+            socket.emit("sendLinesToServer", canvas.toDataURL());
+        }, 7);
+        
+        socket.on("getLinesFromServer", (canvasData) => {
+            context = canvas.getContext("2d");
+            imgCont.src = canvasData;
+            setInterval(context.drawImage(imgCont, 0, 0), 200);
         });
-        setInterval(function(){
-            socket.emit("getLines", canvas.toDataURL());
-            console.log(canvasCtx);
-        }, 2500);
         //setInterval(socket.on("sendlines", canvasCtx), 200);
     });
 </script>

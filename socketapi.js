@@ -12,9 +12,11 @@ io.on("connection", function(socket) {
 
 
     //get lines from frontend
-    socket.on("getLines", (arg) => {
-        console.log(arg);
+    socket.on("sendLinesToServer", (lines) => {
+        //console.log(lines);
+        socket.broadcast.emit("getLinesFromServer", lines);
     });
+
 
     socket.on("connect_error", (err) => {
         console.log(`connect_error due to ${err.message}`);

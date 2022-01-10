@@ -90,8 +90,8 @@ const isChrome = () => {
     }
 }
 
-
+/* 
 function sendLines() {
 
     socket.emit("sendLinesToServer", canvas.toDataURL());
-}
+} */

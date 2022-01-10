@@ -18,6 +18,11 @@ io.on("connection", function(socket) {
     });
 
 
+    socket.on("userMessage", (message) => {
+        socket.broadcast.emit("receiveUserMessage", message);
+    });
+
+
     socket.on("connect_error", (err) => {
         console.log(`connect_error due to ${err.message}`);
     });

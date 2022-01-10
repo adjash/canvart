@@ -21,11 +21,22 @@
         </div>
     </div>
 </div>
+<div class="chat">
+    <div class="user__chat">
+        <ul class="messages">
+            <li class="message">Messages from other players:</li>
+
+        </ul>
+        <input type="text" name="message input" id="message__input">
+    </div>
+</div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
     
-    var socket = io();
+    let socket = io();
+
+    let userChat = document.querySelector('.chat .user__chat .messages');
     
     window.addEventListener('load', () => {
         let imgCont = document.createElement("img");
@@ -35,17 +46,44 @@
             console.log(arg);
         });*/
         
-        /*setInterval(function (e){
+
+
+        //not so effective multilayer 
+        setInterval(function (e){
             //sending canvas as image to the server
             socket.emit("sendLinesToServer", canvas.toDataURL());
-        }, 7);*/
+        }, 100);
         
+
+        //receive lines from the server
         socket.on("getLinesFromServer", (canvasData) => {
             context = canvas.getContext("2d");
             imgCont.src = canvasData;
             setInterval(context.drawImage(imgCont, 0, 0), 200);
         });
-        //setInterval(socket.on("sendlines", canvasCtx), 200);
+
+        //receive user message from the server
+        socket.on("receiveUserMessage", (message) => {
+            let chatItem = document.createElement('li');
+            chatItem.className = "message";
+            chatItem.innerHTML = `<p>${message}</p>`;
+
+            userChat.appendChild(chatItem);
+        })
+    });
+    document.querySelector('#message__input').addEventListener('keyup', function(e){
+        if(e.keyCode === 13){
+            e.preventDefault();
+            //send message to user chat
+            socket.emit("userMessage", e.path[0].value);
+
+            let chatItem = document.createElement('li');
+            chatItem.className = "message";
+            chatItem.innerHTML = `<p>${e.path[0].value}</p>`;
+
+            userChat.appendChild(chatItem);
+            e.path[0].value = "";
+        }
     });
 </script>
       

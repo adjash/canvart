@@ -65,7 +65,7 @@
             context = canvas.getContext("2d");
             imgCont.src = canvasData;
             //imgCont.src = "";
-            setInterval(context.drawImage(imgCont, 0, 0), 200);
+            setInterval(context.drawImage(imgCont, 0, 0), 250);
         });
 
         socket.on("serverCanvasClear", (e) => {

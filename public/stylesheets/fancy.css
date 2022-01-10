@@ -4,7 +4,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(288deg, #1d3557, #457b9d, #5eb1bf, #a8dadc);
+    background: linear-gradient(288deg, #1d3557, #5eb1bf, #a8dadc, #457b9d);
     background-size: 800% 800%;
     -webkit-animation: backgroundGradent 25s ease infinite;
     -moz-animation: backgroundGradent 25s ease infinite;

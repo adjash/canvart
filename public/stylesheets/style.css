@@ -1,17 +1,30 @@
 canvas {
-    border: 1px solid black;
+    border: 1px solid var(--offwhite);
     margin: 0 auto;
     display: block;
     border-radius: var(--border-radius);
     background-color: var(--offwhite)
 }
 .controls {
-    background-color: var(--inactive-blue);
+    background-color: var(--dark-highlight);
     border-radius: var(--border-radius);
-    padding: 1em 1em;
+    padding: var(--rg-padding);
+    color: var(--offwhite);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    height: 100%;
+    border: 1px solid var(--offwhite);
+    margin-bottom: var(--rg-padding);
+}
+.controls__title {
+    text-align: center;
 }
 .user__chat {
     border-radius: var(--border-radius);
+    border: 1px solid var(--offwhite);
+    overflow: hidden;
 }
 .messages {
     min-height: 350px;
@@ -28,17 +41,17 @@ canvas {
     width: var(--border-radius);
 }
 .messages::-webkit-scrollbar-track {
-    background: #a3a3a3;
+    background: var(--scroll);
 }
 .messages::-webkit-scrollbar-thumb {
-    background-color: #ffffff;
+    background-color: var(--offwhite);
     border-radius: var(--border-radius);
-    border: 6px solid #ffffff;
+    border: var(--border-radius) solid var(--offwhite);
 }
 #message__input {
     background-color: var(--active-blue);
     color: var(--offwhite);
-    padding: 1rem;
+    padding: var(--rg-padding);
     width: 100%;
     border-bottom-left-radius: var(--border-radius);
     border-bottom-right-radius: var(--border-radius);

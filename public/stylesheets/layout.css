@@ -3,6 +3,7 @@
     padding: 0;
     border: 0;
     box-sizing: border-box;
+    font-family: 'Fira Sans Condensed', sans-serif;
 }
 :root {
     --pink: #e63946;
@@ -11,6 +12,7 @@
     --active-blue: #457b9d;
     --dark-highlight: #1d3557;
     --grey-blue: #5eb1bf;
+    --scroll: #122136;
     --border-radius: 8px;
     --rg-padding: 1rem;
 }

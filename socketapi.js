@@ -3,7 +3,12 @@ const socketapi = {
     io: io
 };
 
-// Add your socket.io logic here!
+
+/*
+    io - everyone
+    server - people connected to same instance
+    broadcast everyone except sender
+*/
 io.on("connection", function(socket) {
     console.log(socket.id)
 
@@ -14,14 +19,19 @@ io.on("connection", function(socket) {
     //get lines from frontend
     socket.on("sendLinesToServer", (lines) => {
         //console.log(lines);
-        socket.broadcast.emit("getLinesFromServer", lines);
+        io.emit("getLinesFromServer", lines);
     });
 
 
     socket.on("userMessage", (message) => {
-        socket.broadcast.emit("receiveUserMessage", message);
+        console.log(message)
+        io.emit("receiveUserMessage", message);
     });
 
+
+    socket.on("clearFrame", (e) => {
+        io.emit("serverCanvasClear", "");
+    })
 
     socket.on("connect_error", (err) => {
         console.log(`connect_error due to ${err.message}`);

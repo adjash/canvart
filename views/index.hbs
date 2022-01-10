@@ -45,22 +45,27 @@
         /*socket.on("hello", (arg) => {
             console.log(arg);
         });*/
-        
 
 
         //not so effective multilayer 
-        /*setInterval(function (e){
+        setInterval(function (e){
             //sending canvas as image to the server
             socket.emit("sendLinesToServer", canvas.toDataURL());
-        }, 700);*/
+        }, 700);
         
 
         //receive lines from the server
         socket.on("getLinesFromServer", (canvasData) => {
             context = canvas.getContext("2d");
-            //imgCont.src = canvasData;
-            imgCont.src = "";
+            imgCont.src = canvasData;
+            //imgCont.src = "";
             setInterval(context.drawImage(imgCont, 0, 0), 200);
+        });
+
+        socket.on("serverCanvasClear", (e) => {
+            context = canvas.getContext("2d");
+            imgCont.src = "";
+            setTimeout(context.drawImage(imgCont, 0, 0), 50);
         });
 
         //receive user message from the server
@@ -70,7 +75,7 @@
             chatItem.innerHTML = `<p>${message}</p>`;
 
             userChat.appendChild(chatItem);
-        })
+        });
     });
     document.querySelector('#message__input').addEventListener('keyup', function(e){
         if(e.keyCode === 13){
@@ -85,6 +90,10 @@
             userChat.appendChild(chatItem);
             e.path[0].value = "";
         }
+    });
+    document.querySelector('.clear__btn').addEventListener('click', function(e){
+        e.preventDefault();
+        socket.emit("clearFrame", "");
     });
 </script>
       

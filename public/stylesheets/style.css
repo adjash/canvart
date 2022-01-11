@@ -21,6 +21,11 @@ canvas {
 .controls__title {
     text-align: center;
 }
+.brush__controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
 .user__chat {
     border-radius: var(--border-radius);
     border: 1px solid var(--offwhite);
